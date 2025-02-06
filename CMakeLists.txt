@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
+
+cmake_policy(SET CMP0042 NEW)
+
 option(DUCKDB_WASM_EXTENSIONS "Whether compiling for Wasm target" OFF)
 
 ###
@@ -26,12 +29,16 @@ endif()
 ###
 # Build
 ###
-project(${EXTENSION_NAME} LANGUAGES C)
+project(${EXTENSION_NAME})
+
+set(CMAKE_CXX_STANDARD "11" CACHE STRING "C++ standard to enforce")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Create Extension library
 set(EXTENSION_SOURCES
-        src/add_numbers.c
-        src/capi_quack.c
+        src/inet_c.cpp
+        src/types.cpp
 )
 
 if (DUCKDB_WASM_EXTENSION)
